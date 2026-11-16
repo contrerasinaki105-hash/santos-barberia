@@ -1,0 +1,1248 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Santos Barbería</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Santos Barbería, barbería 100% familiar desde 1957 en Quetzaltenango y Mazatenango, Guatemala. Cortes, fades, perfilado de barba y mascarilla.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&display=swap">
+<style>
+/* Layout: páginas independientes por hash, alternando "noche de barbería" (negro) y "papel de cartel" (beige envejecido de sus posts). */
+:root{
+  --ink:#111111; --ink-2:#1A1A1A; --ink-3:#24211d;
+  --sand:#D8C3A5; --cream:#F2E9DC; --white:#FFFFFF;
+  --mute:#9b958c; --gold:#A88B5A; --wine:#7a2a22;
+  --paper-ink:#2a1d14;
+  --f-display:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;
+  --f-label:"Oswald","Arial Narrow",sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --ease:cubic-bezier(.77,0,.18,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --gut:max(16px, env(safe-area-inset-left, 0px));
+  --gut-r:max(16px, env(safe-area-inset-right, 0px));
+  --nav-h:72px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{background:var(--ink);color:var(--cream);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{width:100%;max-width:1320px;margin-inline:auto;padding-left:var(--gut);padding-right:var(--gut-r)}
+@media (min-width:900px){.wrap{padding-left:max(48px,env(safe-area-inset-left,0px));padding-right:max(48px,env(safe-area-inset-right,0px))}}
+
+/* grain over everything */
+.grain{position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:90;opacity:.07;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 1.2s steps(4) infinite}
+@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-1%)}100%{transform:translate(0,0)}}
+
+/* paper surface (their poster look) */
+.paper{background-color:var(--sand);color:var(--paper-ink);
+  background-image:radial-gradient(ellipse at 20% 10%,rgba(255,240,215,.55),transparent 55%),radial-gradient(ellipse at 90% 100%,rgba(90,60,30,.28),transparent 60%),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.04' numOctaves='4'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .24 0 0 0 0 .12 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E")}
+.paper ::selection{background:var(--paper-ink);color:var(--sand)}
+
+/* type */
+.display{font-family:var(--f-display);font-weight:400;line-height:.88;letter-spacing:.01em;text-transform:uppercase;margin:0;text-wrap:balance}
+.eyebrow{font-family:var(--f-label);font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:14px;margin:0}
+.eyebrow::before{content:"";width:34px;height:1px;background:currentColor}
+.paper .eyebrow{color:var(--wine)}
+.serif{font-family:var(--f-serif);font-style:italic;font-weight:400}
+.lead{font-size:clamp(1.05rem,1.6vw,1.25rem);max-width:58ch;color:#d9cfc1}
+.paper .lead{color:#4a3829}
+.tag-pending{display:inline-block;font-family:var(--f-label);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;border:1px dashed currentColor;padding:2px 8px;border-radius:2px;opacity:.75;white-space:nowrap}
+
+/* buttons */
+.btn{--bg:var(--sand);--fg:var(--ink);position:relative;display:inline-flex;align-items:center;gap:12px;padding:16px 26px;font-family:var(--f-label);font-size:.86rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;border:1px solid var(--bg);background:var(--bg);color:var(--fg);cursor:pointer;overflow:hidden;isolation:isolate;transition:color .45s var(--ease-out),transform .3s var(--ease-out)}
+.btn::after{content:"";position:absolute;inset:0;background:var(--ink);transform:translateY(101%);transition:transform .5s var(--ease-out);z-index:-1}
+.btn:hover{color:var(--sand)}
+.btn:hover::after{transform:translateY(0)}
+.btn:active{transform:scale(.97)}
+.btn .arr{transition:transform .45s var(--ease-out)}
+.btn:hover .arr{transform:translateX(5px)}
+.btn--ghost{--bg:transparent;--fg:var(--cream);border-color:rgba(242,233,220,.45)}
+.btn--ghost::after{background:var(--cream)}
+.btn--ghost:hover{color:var(--ink)}
+.paper .btn{--bg:var(--paper-ink);--fg:var(--cream)}
+.paper .btn::after{background:var(--wine)}
+.paper .btn:hover{color:var(--cream)}
+.btn--wa{--bg:var(--sand)}
+.btn-row{display:flex;flex-wrap:wrap;gap:14px}
+
+/* logo */
+.logo{display:inline-flex;flex-direction:column;align-items:center;text-decoration:none;color:inherit;line-height:1}
+.logo__word{font-family:var(--f-display);font-size:2rem;letter-spacing:.06em;display:flex;align-items:center}
+.logo__word svg{height:.86em;width:auto;margin:0 .02em;transform:translateY(-.02em)}
+.logo__sub{font-family:var(--f-label);font-size:.5rem;letter-spacing:.32em;text-transform:uppercase;display:flex;align-items:center;gap:6px;margin-top:3px;opacity:.85}
+.logo__sub::before,.logo__sub::after{content:"";width:14px;height:1px;background:currentColor}
+
+/* NAV */
+.nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:20px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));transition:background .4s,backdrop-filter .4s,transform .6s var(--ease-out)}
+@media (min-width:900px){.nav{padding-left:max(40px,env(safe-area-inset-left,0px));padding-right:max(40px,env(safe-area-inset-right,0px))}}
+.nav.is-solid{background:rgba(17,17,17,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(216,195,165,.12)}
+.nav__links{display:none;gap:26px;list-style:none;margin:0;padding:0}
+.nav__links a{font-family:var(--f-label);font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;color:#cfc6b8;position:relative;padding:6px 0;transition:color .3s}
+.nav__links a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease-out)}
+.nav__links a:hover,.nav__links a[aria-current="page"]{color:var(--cream)}
+.nav__links a:hover::after,.nav__links a[aria-current="page"]::after{transform:scaleX(1);transform-origin:left}
+.nav__cta{display:none}
+.nav__cta.btn{padding:12px 18px;font-size:.74rem}
+.burger{width:46px;height:46px;border:1px solid rgba(216,195,165,.35);background:transparent;display:grid;place-items:center;cursor:pointer;border-radius:50%}
+.burger span{display:block;width:18px;height:1px;background:var(--cream);position:relative;transition:transform .4s var(--ease-out)}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:18px;height:1px;background:var(--cream);transition:transform .4s var(--ease-out)}
+.burger span::before{top:-6px}.burger span::after{top:6px}
+.menu-open .burger span{background:transparent}
+.menu-open .burger span::before{transform:translateY(6px) rotate(45deg)}
+.menu-open .burger span::after{transform:translateY(-6px) rotate(-45deg)}
+@media (min-width:1180px){.nav__links{display:flex}.nav__cta{display:inline-flex}.burger{display:none}}
+
+/* mobile menu */
+.mmenu{position:fixed;inset:0;z-index:45;background:var(--ink-2);display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h) + env(safe-area-inset-top,0px) + 10px) var(--gut-r) calc(30px + env(safe-area-inset-bottom,0px)) var(--gut);clip-path:inset(0 0 100% 0);transition:clip-path .7s var(--ease);visibility:hidden}
+.menu-open .mmenu{clip-path:inset(0 0 0 0);visibility:visible}
+.mmenu ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.mmenu a{font-family:var(--f-display);font-size:clamp(2.6rem,11vw,4.2rem);line-height:1;text-decoration:none;display:inline-block;transform:translateY(40px);opacity:0;transition:transform .7s var(--ease-out),opacity .7s,color .3s}
+.mmenu a[aria-current="page"]{color:var(--gold)}
+.menu-open .mmenu a{transform:none;opacity:1;transition-delay:calc(.15s + var(--i)*.05s)}
+.mmenu__foot{margin-top:34px;display:flex;flex-wrap:wrap;gap:12px}
+
+/* progress + cursor + float */
+.progress{position:fixed;top:env(safe-area-inset-top,0px);left:0;height:2px;width:100%;background:var(--gold);transform-origin:left;transform:scaleX(0);z-index:55}
+.cursor{position:fixed;left:0;top:0;width:40px;height:40px;margin:-20px 0 0 -20px;border:1px solid var(--sand);border-radius:50%;pointer-events:none;z-index:95;mix-blend-mode:difference;transition:width .35s var(--ease-out),height .35s var(--ease-out),margin .35s var(--ease-out),background .3s,opacity .3s;opacity:0}
+.cursor.is-hover{width:76px;height:76px;margin:-38px 0 0 -38px;background:var(--sand)}
+.cursor-dot{position:fixed;left:0;top:0;width:5px;height:5px;margin:-2.5px 0 0 -2.5px;border-radius:50%;background:var(--sand);pointer-events:none;z-index:96;mix-blend-mode:difference;opacity:0}
+@media (pointer:fine) and (prefers-reduced-motion:no-preference){.has-cursor .cursor,.has-cursor .cursor-dot{opacity:1}}
+.wa-float{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;width:58px;height:58px;border-radius:50%;background:var(--sand);color:var(--ink);display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.45);transition:transform .35s var(--ease-out)}
+.wa-float:hover{transform:scale(1.08) rotate(-6deg)}
+.wa-float svg{width:28px;height:28px}
+
+/* page curtain transition */
+.curtain{position:fixed;inset:0;z-index:80;pointer-events:none;transform:translateY(100%);display:grid;place-items:center;background:var(--sand);color:var(--paper-ink)}
+.curtain.paper{}
+.curtain.is-cover{transition:transform .6s var(--ease);transform:translateY(0)}
+.curtain.is-leave{transition:transform .7s var(--ease);transform:translateY(-100%)}
+.curtain__label{font-family:var(--f-display);font-size:clamp(3rem,12vw,9rem);line-height:1;overflow:hidden}
+.curtain__label span{display:block;transform:translateY(100%);transition:transform .5s var(--ease-out) .15s}
+.curtain.is-cover .curtain__label span{transform:none}
+.curtain__sub{font-family:var(--f-label);letter-spacing:.3em;font-size:.75rem;text-transform:uppercase;text-align:center;margin-top:10px}
+
+/* pages */
+.page{min-height:100vh}
+.page-head{padding-block:calc(var(--nav-h) + env(safe-area-inset-top,0px) + clamp(48px,9vw,120px)) clamp(40px,6vw,80px);position:relative;overflow:hidden}
+.page-head .display{font-size:clamp(3.4rem,11vw,10rem)}
+.page-head .lead{margin-top:24px}
+.section{padding-block:clamp(72px,10vw,140px)}
+
+/* reveal system (only active with JS + motion allowed) */
+.js.motion [data-reveal]{opacity:0;transform:translateY(36px);transition:opacity 1s var(--ease-out),transform 1.1s var(--ease-out);transition-delay:calc(var(--d,0)*1ms)}
+.js.motion [data-reveal].in{opacity:1;transform:none}
+.js.motion [data-reveal="clip"]{opacity:1;transform:none;position:relative}
+.js.motion [data-reveal="clip"]::after{content:"";position:absolute;inset:0;z-index:2;background:var(--ink);transform-origin:50% 0;transition:transform 1.3s var(--ease);transition-delay:calc(var(--d,0)*1ms);pointer-events:none}
+.js.motion .paper [data-reveal="clip"]::after{background:var(--sand)}
+.js.motion [data-reveal="clip"].in::after{transform:scaleY(0)}
+.js.motion [data-reveal="clip"] img{transform:scale(1.25);transition:transform 1.8s var(--ease-out);transition-delay:calc(var(--d,0)*1ms)}
+.js.motion [data-reveal="clip"].in img{transform:scale(1)}
+.js.motion [data-reveal="line"]{opacity:1;transform:scaleX(0);transform-origin:left;transition:transform 1.4s var(--ease)}
+.js.motion [data-reveal="line"].in{transform:scaleX(1)}
+.split .w{display:inline-block;overflow:hidden;vertical-align:top;padding:.16em 0 .04em;margin:-.16em 0 -.04em}
+.split .w>span{display:inline-block}
+.js.motion .split .w>span{transform:translateY(135%);transition:transform 1s var(--ease-out);transition-delay:calc(var(--i)*55ms + var(--d,0)*1ms)}
+.js.motion .split.in .w>span{transform:none}
+
+/* ---------- INICIO ---------- */
+.hero{position:relative;min-height:100svh;display:grid;overflow:hidden;background:var(--ink)}
+.hero__media{position:absolute;inset:0;overflow:hidden}
+.hero__media img{width:100%;height:100%;object-fit:cover;object-position:62% 22%;filter:grayscale(.15) contrast(1.08) brightness(.82) sepia(.18)}
+.hero__media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,17,17,.55) 0%,rgba(17,17,17,.1) 30%,rgba(17,17,17,.55) 62%,var(--ink) 100%)}
+@media (min-width:900px){
+  .hero__media{left:auto;width:52%;inset-block:0;right:0}
+  .hero__media::after{background:linear-gradient(90deg,var(--ink) 0%,rgba(17,17,17,.2) 30%,rgba(17,17,17,0) 60%),linear-gradient(180deg,rgba(17,17,17,.5),transparent 25%,transparent 75%,var(--ink))}
+}
+.hero__year{position:absolute;right:-2vw;bottom:-4vw;font-family:var(--f-display);font-size:clamp(10rem,34vw,30rem);line-height:.8;color:transparent;-webkit-text-stroke:1px rgba(216,195,165,.22);pointer-events:none;user-select:none;z-index:1}
+.hero__content{position:relative;z-index:2;align-self:end;padding-block:calc(var(--nav-h) + 60px) clamp(90px,12vh,140px)}
+.hero h1{font-size:clamp(3.6rem,10.5vw,9.6rem);color:var(--cream);max-width:7.4em}
+.hero h1 .gold{color:var(--sand)}
+.hero__sub{margin:26px 0 34px;max-width:44ch;font-size:clamp(1.05rem,1.5vw,1.2rem);color:#d6ccbe}
+.hero__sub .serif{font-size:1.3em;color:var(--sand)}
+.hero__meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:38px;font-family:var(--f-label);font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.hero__meta span{display:flex;align-items:center;gap:8px}
+.hero__meta span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.badge{position:absolute;z-index:3;right:max(20px,env(safe-area-inset-right,0px));top:calc(var(--nav-h) + 40px);width:130px;height:130px;display:none}
+@media (min-width:700px){.badge{display:block}}
+@media (min-width:900px){.badge{right:max(40px,4vw);top:auto;bottom:14vh;width:150px;height:150px}}
+.badge svg{width:100%;height:100%}
+.badge__ring{animation:spin 22s linear infinite;transform-origin:50% 50%}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scroll-ind{position:absolute;z-index:3;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;font-family:var(--f-label);font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--mute);text-decoration:none}
+.scroll-ind i{width:1px;height:46px;background:rgba(216,195,165,.25);position:relative;overflow:hidden}
+.scroll-ind i::after{content:"";position:absolute;left:0;top:0;width:1px;height:45%;background:var(--sand);animation:drip 2s var(--ease) infinite}
+@keyframes drip{0%{transform:translateY(-100%)}100%{transform:translateY(240%)}}
+/* hero intro */
+.js.motion .hero .hero__media{clip-path:inset(0 0 0 100%);transition:clip-path 1.6s var(--ease) .2s}
+.js.motion .hero .hero__media img{transform:scale(1.2);transition:transform 2.4s var(--ease-out) .2s}
+.js.motion .hero.is-in .hero__media{clip-path:inset(0 0 0 0)}
+.js.motion .hero.is-in .hero__media img{transform:scale(1.04)}
+.js.motion .hero .fade-up{opacity:0;transform:translateY(24px);transition:opacity 1s var(--ease-out),transform 1s var(--ease-out);transition-delay:calc(var(--d)*1ms)}
+.js.motion .hero.is-in .fade-up{opacity:1;transform:none}
+.js.motion .nav{transform:translateY(-110%)}
+.js.motion.nav-in .nav{transform:none}
+
+.marquee{background:var(--sand);color:var(--paper-ink);overflow:hidden;border-block:1px solid rgba(42,29,20,.2);padding-block:16px}
+.marquee__track{display:flex;gap:44px;width:max-content;animation:marq 32s linear infinite;font-family:var(--f-display);font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:.04em;white-space:nowrap}
+.marquee__track span{display:flex;align-items:center;gap:44px}
+.marquee__track span::after{content:"✦";font-size:.5em;color:var(--wine)}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+.welcome{display:grid;gap:clamp(40px,6vw,90px);align-items:center}
+@media (min-width:900px){.welcome{grid-template-columns:1.05fr .95fr}}
+.welcome h2{font-size:clamp(3rem,7vw,6.4rem)}
+.welcome h2 .serif{display:block;text-transform:none;font-size:.62em;line-height:1.1;color:var(--wine);margin-top:.15em}
+.welcome__text p{margin:0 0 18px;max-width:52ch}
+.welcome__sign{display:flex;align-items:center;gap:18px;margin-top:30px;font-family:var(--f-label);font-size:.8rem;letter-spacing:.2em;text-transform:uppercase}
+.welcome__stamp{width:92px;height:92px;flex:none}
+.welcome__links{display:grid;border-top:1px solid rgba(42,29,20,.25)}
+.welcome__links a{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 4px;border-bottom:1px solid rgba(42,29,20,.25);text-decoration:none;font-family:var(--f-display);font-size:clamp(1.8rem,3.4vw,2.6rem);line-height:1;transition:padding .5s var(--ease-out),color .3s}
+.welcome__links a small{font-family:var(--f-body);font-size:.85rem;color:#6b5641;text-transform:none;letter-spacing:0;flex:1;text-align:right;margin-right:12px}
+.welcome__links a:hover{padding-left:16px;color:var(--wine)}
+.welcome__links a .arr{font-family:var(--f-body);font-size:1.2rem;transition:transform .5s var(--ease-out)}
+.welcome__links a:hover .arr{transform:translateX(6px) rotate(-45deg)}
+@media (max-width:560px){.welcome__links a small{display:none}}
+
+/* scroll-transforming photo */
+.zoomband{height:220vh;position:relative;background:var(--ink)}
+.zoomband__stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center}
+.zoomband__frame{position:absolute;inset:0;margin:auto;width:calc(58% + 42% * var(--p,0));height:calc(56% + 44% * var(--p,0));overflow:hidden;border-radius:calc(220px * (1 - var(--p,0)))  calc(220px * (1 - var(--p,0))) 0 0}
+.zoomband__frame img{width:100%;height:100%;object-fit:cover;object-position:0% 40%;transform:scale(calc(1.25 - .25 * var(--p,0)));filter:sepia(calc(.6 - .45 * var(--p,0))) brightness(calc(.75 + .1 * var(--p,0)))}
+.zoomband__frame::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(17,17,17,.75),transparent 55%)}
+.zoomband__txt{position:relative;z-index:2;text-align:center;padding-inline:20px;align-self:end;margin-bottom:12vh;opacity:calc(var(--p,0) * 1.6 - .4)}
+.zoomband__txt .serif{font-size:clamp(2.6rem,7vw,6rem);line-height:1;color:var(--cream);display:block}
+.zoomband__txt p{font-family:var(--f-label);letter-spacing:.3em;text-transform:uppercase;font-size:.78rem;color:var(--sand);margin:18px 0 0}
+.zoomband__hint{position:absolute;top:calc(var(--nav-h) + 30px);left:0;right:0;text-align:center;font-family:var(--f-display);font-size:clamp(2rem,6vw,5rem);color:transparent;-webkit-text-stroke:1px rgba(216,195,165,.35);opacity:calc(1 - var(--p,0) * 2);z-index:2;pointer-events:none}
+.reduce .zoomband{height:auto}
+.reduce .zoomband__stick{position:relative;height:80vh}
+.reduce .zoomband__frame{width:100%;height:100%;border-radius:0}
+.reduce .zoomband__txt{opacity:1}
+.reduce .zoomband__hint{display:none}
+
+/* ---------- NOSOTROS ---------- */
+.story-head{position:relative}
+.story-head .big-year{position:absolute;right:-1vw;top:calc(var(--nav-h) + 10px);font-family:var(--f-display);font-size:clamp(9rem,30vw,26rem);line-height:.8;color:rgba(216,195,165,.07);pointer-events:none}
+.story{display:grid;gap:clamp(36px,5vw,72px)}
+@media (min-width:960px){.story{grid-template-columns:1.25fr 1fr;align-items:start}}
+.story__photo{position:relative;aspect-ratio:2/1.05;overflow:hidden;max-width:100%}
+.story__photo img{width:100%;height:100%;object-fit:cover;filter:sepia(.35) contrast(1.05)}
+.story__cap{display:flex;justify-content:space-between;gap:12px;margin-top:12px;font-family:var(--f-label);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.story__text p{margin:0 0 18px;color:#d6ccbe;max-width:52ch}
+.story__text .drop::first-letter{font-family:var(--f-display);float:left;font-size:4.6em;line-height:.8;padding:6px 10px 0 0;color:var(--sand)}
+.story__quote{font-family:var(--f-serif);font-style:italic;font-size:clamp(1.6rem,2.6vw,2.2rem);line-height:1.2;color:var(--sand);border-left:1px solid var(--gold);padding-left:22px;margin:30px 0 0}
+
+.timeline{position:relative;margin-top:clamp(70px,9vw,120px)}
+.timeline__rail{position:relative;height:1px;background:rgba(216,195,165,.18);margin-bottom:34px}
+.timeline__rail b{position:absolute;inset:0;background:var(--gold);transform-origin:left;transform:scaleX(var(--tl,0));transition:transform .8s var(--ease)}
+.timeline__list{display:grid;gap:12px;list-style:none;margin:0;padding:0}
+@media (min-width:860px){.timeline__list{grid-template-columns:repeat(4,1fr);gap:22px}}
+.tl-item{all:unset;box-sizing:border-box;cursor:pointer;display:block;padding:22px 20px 24px;border:1px solid rgba(216,195,165,.15);transition:background .4s,border-color .4s,transform .4s var(--ease-out)}
+.tl-item:hover{border-color:rgba(216,195,165,.4)}
+.tl-item:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.tl-item[aria-pressed="true"]{background:var(--sand);color:var(--paper-ink);border-color:var(--sand)}
+.tl-item .yr{font-family:var(--f-display);font-size:clamp(2.6rem,4vw,3.4rem);line-height:1;display:block}
+.tl-item .tt{font-family:var(--f-label);text-transform:uppercase;letter-spacing:.14em;font-size:.82rem;display:block;margin-top:8px}
+.tl-item.pending .yr{color:transparent;-webkit-text-stroke:1px var(--sand)}
+.tl-item.pending[aria-pressed="true"] .yr{-webkit-text-stroke:1px var(--paper-ink)}
+.timeline__detail{margin-top:26px;min-height:120px;display:grid;gap:10px;max-width:70ch}
+.timeline__detail p{margin:0;color:#d6ccbe}
+.timeline__detail .src{font-family:var(--f-label);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.tl-swap{animation:tlin .6s var(--ease-out)}
+@keyframes tlin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.values{display:grid;gap:0;border-top:1px solid rgba(42,29,20,.25)}
+@media (min-width:860px){.values{grid-template-columns:repeat(3,1fr)}}
+.value{padding:38px 0 42px;border-bottom:1px solid rgba(42,29,20,.25)}
+@media (min-width:860px){.value{padding:44px 34px 50px;border-bottom:0;border-right:1px solid rgba(42,29,20,.25)}.value:first-child{padding-left:0}.value:last-child{border-right:0}}
+.value h3{font-family:var(--f-display);font-size:clamp(2.6rem,4.5vw,3.8rem);font-weight:400;line-height:1;margin:0 0 12px}
+.value p{margin:0;max-width:36ch;color:#4a3829}
+.value svg{width:38px;height:38px;margin-bottom:22px;color:var(--wine)}
+
+/* ---------- SERVICIOS ---------- */
+.svc-list{list-style:none;margin:0;padding:0;border-top:1px solid rgba(216,195,165,.18)}
+.svc{border-bottom:1px solid rgba(216,195,165,.18)}
+.svc__row{display:grid;grid-template-columns:auto 1fr auto;gap:12px 24px;align-items:center;padding:26px 0;position:relative;cursor:default}
+.svc__ix{font-family:var(--f-label);font-size:.75rem;letter-spacing:.2em;color:var(--gold);align-self:start;padding-top:12px}
+.svc__name{font-family:var(--f-display);font-size:clamp(2.4rem,6.4vw,5.6rem);line-height:.95;transition:transform .6s var(--ease-out),color .4s;margin:0;font-weight:400}
+.svc__desc{grid-column:2/4;margin:0;color:#bdb3a5;max-width:60ch}
+.svc__meta{grid-column:2/4;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;font-family:var(--f-label);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.svc__book{grid-column:3;grid-row:1;justify-self:end}
+.svc__book.btn{padding:12px 16px;font-size:.72rem}
+.svc__thumb{grid-column:1/4;aspect-ratio:16/10;overflow:hidden;max-width:100%}
+.svc__thumb img{width:100%;height:100%;object-fit:cover}
+@media (min-width:900px){
+  .svc__row{grid-template-columns:70px 1fr 300px auto;padding:34px 0}
+  .svc__desc{grid-column:3;grid-row:1;font-size:.95rem}
+  .svc__meta{grid-column:2;grid-row:2}
+  .svc__book{grid-column:4}
+  .svc__thumb{display:none}
+  .svc:hover .svc__name{transform:translateX(18px);color:var(--sand)}
+}
+.svc-float{position:fixed;left:0;top:0;width:300px;aspect-ratio:4/5;pointer-events:none;z-index:30;overflow:hidden;opacity:0;transform:translate(-50%,-50%) scale(.85) rotate(-4deg);transition:opacity .35s,transform .5s var(--ease-out);display:none}
+@media (min-width:900px) and (pointer:fine){.svc-float{display:block}}
+.svc-float.on{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-2deg)}
+.svc-float img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;transition:opacity .4s}
+.svc-float img.on{opacity:1}
+
+.tips{display:grid;gap:clamp(36px,5vw,70px);align-items:center}
+@media (min-width:900px){.tips{grid-template-columns:.9fr 1.1fr}}
+.tips__img{aspect-ratio:4/5;overflow:hidden;max-width:100%}
+.tips__img img{width:100%;height:100%;object-fit:cover;object-position:75% 50%}
+.tips h2{font-size:clamp(3rem,7vw,6rem)}
+.tips__grid{display:grid;gap:26px 34px;margin-top:34px}
+@media (min-width:560px){.tips__grid{grid-template-columns:1fr 1fr}}
+.tip{display:grid;grid-template-columns:52px 1fr;gap:16px;align-items:start}
+.tip__ic{width:52px;height:52px;border-radius:50%;background:var(--paper-ink);color:var(--sand);display:grid;place-items:center}
+.tip__ic svg{width:24px;height:24px}
+.tip h3{font-family:var(--f-label);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:1.05rem;margin:2px 0 4px}
+.tip p{margin:0;font-size:.95rem;color:#4a3829}
+
+/* ---------- SUCURSALES ---------- */
+.branches{display:grid;gap:clamp(30px,4vw,60px)}
+@media (min-width:960px){.branches{grid-template-columns:.8fr 1.2fr;align-items:start}}
+.br-tabs{display:grid;border-top:1px solid rgba(216,195,165,.18)}
+.br-tab{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 16px;padding:24px 4px;border-bottom:1px solid rgba(216,195,165,.18);transition:padding .5s var(--ease-out)}
+.br-tab:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.br-tab .n{font-family:var(--f-display);font-size:clamp(2.4rem,5vw,3.8rem);line-height:1;color:#7d766c;transition:color .4s}
+.br-tab .c{grid-column:1;font-family:var(--f-label);font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.br-tab .dot{grid-row:1/3;grid-column:2;width:14px;height:14px;border-radius:50%;border:1px solid var(--mute);transition:background .4s,border-color .4s}
+.br-tab:hover .n{color:var(--cream)}
+.br-tab[aria-selected="true"]{padding-left:14px}
+.br-tab[aria-selected="true"] .n{color:var(--sand)}
+.br-tab[aria-selected="true"] .dot{background:var(--gold);border-color:var(--gold)}
+.br-panel{background:var(--ink-2);border:1px solid rgba(216,195,165,.12)}
+.br-panel__media{aspect-ratio:16/9;overflow:hidden;position:relative;max-width:100%}
+.br-panel__media img{width:100%;height:100%;object-fit:cover;filter:sepia(.2)}
+.br-ph{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px}
+.br-ph .display{font-size:clamp(3rem,8vw,6rem)}
+.br-ph small{display:block;margin-top:10px}
+.br-panel__body{padding:clamp(22px,3.5vw,40px);display:grid;gap:26px}
+.br-panel__body h3{font-family:var(--f-display);font-weight:400;font-size:clamp(2.2rem,4vw,3.2rem);line-height:1;margin:0}
+.br-facts{display:grid;gap:18px 30px;margin:0}
+@media (min-width:600px){.br-facts{grid-template-columns:1fr 1fr}}
+.br-facts dt{font-family:var(--f-label);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.br-facts dd{margin:0;color:#e3d9cb}
+.br-swap{animation:tlin .6s var(--ease-out)}
+
+/* ---------- GALERÍA ---------- */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:clamp(30px,4vw,50px)}
+.filter{border:1px solid rgba(216,195,165,.3);background:transparent;padding:10px 18px;font-family:var(--f-label);font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border-radius:999px;transition:background .3s,color .3s,border-color .3s}
+.filter:hover{border-color:var(--sand)}
+.filter[aria-pressed="true"]{background:var(--sand);color:var(--ink);border-color:var(--sand)}
+.gallery{display:grid;gap:14px;grid-template-columns:1fr 1fr;grid-auto-flow:dense}
+@media (min-width:900px){.gallery{grid-template-columns:repeat(12,1fr);gap:18px;grid-auto-rows:80px;grid-auto-flow:row}}
+.g-item{all:unset;box-sizing:border-box;position:relative;overflow:hidden;cursor:zoom-in;display:block;aspect-ratio:4/5;background:var(--ink-2);transition:opacity .5s,transform .6s var(--ease-out)}
+.g-item:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.g-item img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease-out),filter .6s;filter:sepia(.15)}
+.g-item:hover img{transform:scale(1.06);filter:sepia(0)}
+.g-item figcaption{position:absolute;left:0;right:0;bottom:0;padding:40px 14px 12px;background:linear-gradient(0deg,rgba(17,17,17,.85),transparent);font-family:var(--f-label);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;transform:translateY(100%);transition:transform .5s var(--ease-out)}
+.g-item:hover figcaption,.g-item:focus-visible figcaption{transform:none}
+.g-item.wide{grid-column:span 2;aspect-ratio:16/9}
+@media (min-width:900px){
+  .g-item{aspect-ratio:auto}
+  .gallery .g-a{grid-column:1/8;grid-row:1/7}
+  .gallery .g-b{grid-column:8/13;grid-row:1/4}
+  .gallery .g-c{grid-column:8/13;grid-row:4/7}
+  .gallery .g-d{grid-column:1/6;grid-row:7/11}
+  .gallery .g-e{grid-column:6/9;grid-row:7/11}
+  .gallery .g-f{grid-column:9/13;grid-row:7/11}
+  .gallery .g-g{grid-column:1/5;grid-row:11/15}
+  .gallery .g-h{grid-column:5/13;grid-row:11/15}
+  .g-item.wide{aspect-ratio:auto}
+  .gallery.filtered{grid-template-columns:repeat(3,1fr);grid-auto-rows:auto}
+  .gallery.filtered .g-item{grid-column:auto;grid-row:auto;aspect-ratio:4/5}
+}
+.g-item.is-hidden{display:none}
+.g-a img{object-position:50% 0}
+.lightbox{position:fixed;inset:0;z-index:85;background:rgba(10,10,10,.96);display:grid;grid-template-rows:auto 1fr auto;padding:calc(14px + env(safe-area-inset-top,0px)) var(--gut-r) calc(14px + env(safe-area-inset-bottom,0px)) var(--gut);opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+.lightbox.open{opacity:1;visibility:visible}
+.lb-top{display:flex;justify-content:space-between;align-items:center;font-family:var(--f-label);letter-spacing:.2em;text-transform:uppercase;font-size:.76rem;color:var(--mute)}
+.lb-stage{display:grid;place-items:center;min-height:0;position:relative}
+.lb-stage img{max-height:78vh;max-width:min(100%,1100px);object-fit:contain;transition:opacity .35s,transform .5s var(--ease-out)}
+.lb-stage img.swap{opacity:0;transform:scale(.97)}
+.lb-btn{width:52px;height:52px;border-radius:50%;border:1px solid rgba(216,195,165,.35);background:rgba(17,17,17,.6);cursor:pointer;display:grid;place-items:center;font-size:1.2rem;transition:background .3s,color .3s}
+.lb-btn:hover{background:var(--sand);color:var(--ink)}
+.lb-bottom{display:flex;justify-content:center;gap:14px;align-items:center}
+.lb-cap{font-family:var(--f-serif);font-style:italic;font-size:1.3rem;color:var(--sand);text-align:center;min-width:0}
+
+/* ---------- PRODUCTOS ---------- */
+.prod-hero{display:grid;gap:clamp(36px,5vw,70px);align-items:center}
+@media (min-width:960px){.prod-hero{grid-template-columns:1fr 1fr}}
+.prod-hero__img{aspect-ratio:1/1;overflow:hidden;max-width:100%}
+.prod-hero__img img{width:100%;height:100%;object-fit:cover}
+.prod-hero h2{font-size:clamp(4rem,10vw,8rem)}
+.prod-hero h2 small{display:block;font-family:var(--f-label);font-size:.18em;letter-spacing:.24em;margin-top:10px;color:var(--wine)}
+.prod-feats{display:grid;gap:14px;margin:28px 0 34px;padding:0;list-style:none}
+.prod-feats li{display:flex;gap:14px;align-items:baseline}
+.prod-feats b{font-family:var(--f-label);text-transform:uppercase;letter-spacing:.06em;min-width:9.5em}
+.tins{display:grid;gap:clamp(30px,4vw,48px) clamp(16px,3vw,40px);grid-template-columns:repeat(2,1fr)}
+@media (min-width:900px){.tins{grid-template-columns:repeat(4,1fr)}}
+.tin{display:grid;gap:14px;align-content:start;text-align:center;justify-items:center}
+.tin__disc{width:min(170px,100%);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.35),transparent 45%),var(--c);box-shadow:inset 0 0 0 10px rgba(255,255,255,.18),inset 0 0 0 12px rgba(0,0,0,.25),0 22px 40px rgba(0,0,0,.45);display:grid;place-items:center;transition:transform .8s var(--ease-out)}
+.tin:hover .tin__disc{transform:rotate(-14deg) translateY(-6px)}
+.tin__disc span{width:58%;aspect-ratio:1;border-radius:50%;background:rgba(242,233,220,.92);display:grid;place-items:center;font-family:var(--f-display);font-size:clamp(1rem,2.2vw,1.35rem);color:var(--c);letter-spacing:.04em}
+.tin h3{font-family:var(--f-display);font-weight:400;font-size:1.7rem;line-height:1;margin:6px 0 0}
+.tin p{margin:0;font-size:.9rem;color:#bdb3a5;max-width:26ch}
+.tin .meta{font-family:var(--f-label);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.tin a{font-family:var(--f-label);font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;color:var(--sand);text-underline-offset:5px}
+
+/* ---------- RESERVAR ---------- */
+.booking{display:grid;gap:clamp(30px,4vw,60px)}
+@media (min-width:1000px){.booking{grid-template-columns:1.3fr .7fr;align-items:start}}
+.steps{display:flex;gap:6px;margin-bottom:30px;list-style:none;padding:0}
+.steps li{flex:1;height:3px;background:rgba(216,195,165,.18);position:relative;overflow:hidden}
+.steps li::after{content:"";position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease)}
+.steps li.done::after{transform:scaleX(1)}
+.step-label{font-family:var(--f-label);font-size:.76rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin:0 0 10px}
+.step h2{font-family:var(--f-display);font-weight:400;font-size:clamp(2.4rem,5vw,3.8rem);line-height:1;margin:0 0 26px}
+.step{animation:stepin .6s var(--ease-out)}
+.step.back{animation:stepback .6s var(--ease-out)}
+@keyframes stepin{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+@keyframes stepback{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+.opts{display:grid;gap:10px}
+@media (min-width:640px){.opts.two{grid-template-columns:1fr 1fr}}
+.opt{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:space-between;gap:12px;align-items:center;padding:18px 20px;border:1px solid rgba(216,195,165,.2);transition:border-color .3s,background .3s,transform .3s var(--ease-out)}
+.opt:hover{border-color:var(--sand);transform:translateY(-2px)}
+.opt:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.opt[aria-pressed="true"]{background:var(--sand);color:var(--ink);border-color:var(--sand)}
+.opt strong{font-family:var(--f-label);font-weight:500;text-transform:uppercase;letter-spacing:.08em;font-size:1rem;display:block}
+.opt small{color:inherit;opacity:.7;font-size:.85rem}
+.field{display:grid;gap:8px;margin-bottom:18px}
+.field label{font-family:var(--f-label);font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.field input,.field select{width:100%;background:transparent;border:0;border-bottom:1px solid rgba(216,195,165,.35);padding:12px 2px;font:inherit;font-size:1.1rem;color:var(--cream);border-radius:0;transition:border-color .3s}
+.field select option{background:var(--ink-2);color:var(--cream)}
+.field input:focus,.field select:focus{outline:none;border-color:var(--sand)}
+.field .err{color:#e59a83;font-size:.85rem;min-height:1.2em}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:8px}
+.slots .opt{justify-content:center;padding:12px 8px;font-family:var(--f-label);letter-spacing:.08em}
+.step-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:30px;flex-wrap:wrap}
+.linkbtn{background:none;border:0;cursor:pointer;font-family:var(--f-label);letter-spacing:.18em;text-transform:uppercase;font-size:.78rem;color:var(--mute);padding:10px 0}
+.linkbtn:hover{color:var(--cream)}
+.btn[disabled]{opacity:.35;pointer-events:none}
+.summary{padding:clamp(22px,3vw,34px)}
+.summary h3{font-family:var(--f-display);font-weight:400;font-size:2.2rem;line-height:1;margin:0 0 18px}
+.summary dl{margin:0;display:grid;gap:0}
+.summary dl div{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px dashed rgba(42,29,20,.3)}
+.summary dt{font-family:var(--f-label);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#6b5641}
+.summary dd{margin:0;text-align:right;font-weight:500;min-width:0;overflow-wrap:anywhere}
+.summary .note{font-size:.85rem;color:#5a4634;margin:18px 0 0}
+
+/* ---------- CONTACTO ---------- */
+.contact-big{font-size:clamp(4.6rem,17vw,15rem)}
+.contact-grid{display:grid;gap:0;border-top:1px solid rgba(216,195,165,.18)}
+@media (min-width:900px){.contact-grid{grid-template-columns:repeat(3,1fr)}}
+.c-cell{padding:34px 0;border-bottom:1px solid rgba(216,195,165,.18);display:grid;gap:10px;align-content:start}
+@media (min-width:900px){.c-cell{padding:40px 30px;border-bottom:0;border-right:1px solid rgba(216,195,165,.18)}.c-cell:first-child{padding-left:0}.c-cell:last-child{border-right:0}}
+.c-cell h3{font-family:var(--f-label);font-weight:500;font-size:.76rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin:0}
+.c-cell .val{font-family:var(--f-display);font-size:clamp(2rem,3.4vw,2.8rem);line-height:1;user-select:all}
+.c-cell p{margin:0;color:#cfc6b8}
+.c-cell a.text{color:var(--sand);text-underline-offset:5px}
+.copy{background:none;border:1px solid rgba(216,195,165,.3);padding:6px 12px;cursor:pointer;font-family:var(--f-label);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;justify-self:start;transition:background .3s,color .3s}
+.copy:hover{background:var(--sand);color:var(--ink)}
+.hours{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.hours li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dotted rgba(216,195,165,.2);padding-bottom:6px;font-size:.95rem}
+
+/* ---------- FOOTER ---------- */
+.footer{position:relative;overflow:hidden;padding-block:clamp(70px,9vw,120px) calc(30px + env(safe-area-inset-bottom,0px));border-top:1px solid rgba(216,195,165,.12);background:var(--ink)}
+.footer__top{display:grid;gap:40px}
+@media (min-width:900px){.footer__top{grid-template-columns:1.3fr 1fr 1fr 1fr}}
+.footer h4{font-family:var(--f-label);font-weight:500;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin:0 0 16px}
+.footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.footer a{text-decoration:none;color:#cfc6b8;transition:color .3s}
+.footer a:hover{color:var(--sand)}
+.footer__brand .logo__word{font-size:2.8rem}
+.footer__brand p{margin:18px 0 0;max-width:30ch;color:var(--mute)}
+.footer__legacy{margin-top:clamp(60px,8vw,100px);display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer__since{font-family:var(--f-display);font-size:clamp(5rem,20vw,17rem);line-height:.78;color:transparent;-webkit-text-stroke:1px rgba(216,195,165,.35);margin:0}
+.footer__since span{color:var(--sand);-webkit-text-stroke:0}
+.footer__bottom{margin-top:30px;padding-top:20px;border-top:1px solid rgba(216,195,165,.12);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:.82rem;color:var(--mute)}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,40px);background:var(--sand);color:var(--ink);padding:12px 20px;font-family:var(--f-label);letter-spacing:.14em;text-transform:uppercase;font-size:.78rem;opacity:0;transition:opacity .3s,transform .4s var(--ease-out);z-index:99;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .grain{display:none}
+}
+</style>
+
+<!-- shared SVG symbols -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="face" viewBox="0 0 64 74">
+      <path fill="currentColor" d="M32 2c-9 0-15 3-18.5 8.5C10 16 9.5 22 10 28l3 4c.5-6 2-10.5 5-13 4 2 10 2.8 17 2.4 4.6-.3 8-1.2 10.4-2.6 2.6 2.8 4 7.4 4.6 13.2l3-4c.6-7-.4-13.6-3.6-18C48 6 46 5.4 43.2 6.4 40.4 3.4 36.6 2 32 2z"/>
+      <path fill="none" stroke="currentColor" stroke-width="5" d="M12.5 30c0 10 1.6 17 4.6 22M51.5 30c0 10-1.6 17-4.6 22"/>
+      <path fill="currentColor" d="M11 36c.6 15 5 26 11 31.5 3 2.8 6.4 4.5 10 4.5s7-1.7 10-4.5C48 62 52.4 51 53 36l-4 3c-.8 6.6-3 11.3-6.2 13.4-2.6-3.4-6.4-5-10.8-5s-8.2 1.6-10.8 5C18 50.3 15.8 45.6 15 39z"/>
+      <path style="fill:var(--hole,#111)" d="M25.5 57.2c2-1.6 4.2-2.3 6.5-2.3s4.5.7 6.5 2.3c-1.8 1.5-4 2.3-6.5 2.3s-4.7-.8-6.5-2.3z"/>
+    </symbol>
+    <symbol id="wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2z"/></symbol>
+    <symbol id="ig" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M7 2.8h10A4.2 4.2 0 0 1 21.2 7v10a4.2 4.2 0 0 1-4.2 4.2H7A4.2 4.2 0 0 1 2.8 17V7A4.2 4.2 0 0 1 7 2.8z"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor"/></symbol>
+    <symbol id="scissors" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8 16 19 3M16 16 5 3"/></g></symbol>
+  </defs>
+</svg>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"></div><div class="cursor-dot" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <a class="logo" href="#inicio" aria-label="Santos Barbería, inicio">
+    <span class="logo__word">SANT<svg viewBox="0 0 64 74" aria-hidden="true"><use href="#face"/></svg>S</span>
+    <span class="logo__sub">Barbería · Desde 1957</span>
+  </a>
+  <nav aria-label="Principal">
+    <ul class="nav__links">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#sucursales">Sucursales</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#productos">Productos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+  <a class="btn nav__cta" href="#reservar">Reservar cita <span class="arr">→</span></a>
+  <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mmenu"><span></span></button>
+</header>
+
+<div class="mmenu" id="mmenu" aria-label="Menú">
+  <ul>
+    <li><a href="#inicio" style="--i:0">Inicio</a></li>
+    <li><a href="#nosotros" style="--i:1">Nosotros</a></li>
+    <li><a href="#servicios" style="--i:2">Servicios</a></li>
+    <li><a href="#sucursales" style="--i:3">Sucursales</a></li>
+    <li><a href="#galeria" style="--i:4">Galería</a></li>
+    <li><a href="#productos" style="--i:5">Productos</a></li>
+    <li><a href="#contacto" style="--i:6">Contacto</a></li>
+  </ul>
+  <div class="mmenu__foot">
+    <a class="btn" href="#reservar">Reservar cita <span class="arr">→</span></a>
+    <a class="btn btn--ghost" href="https://www.instagram.com/barberiasantosgt/" target="_blank" rel="noopener">Instagram</a>
+  </div>
+</div>
+
+<div class="curtain paper" id="curtain" aria-hidden="true">
+  <div>
+    <div class="curtain__label"><span id="curtainLabel">Santos</span></div>
+    <div class="curtain__sub">Barbería · Desde 1957</div>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ================= INICIO ================= -->
+<section class="page" data-page="inicio" aria-label="Inicio">
+  <div class="hero" id="hero">
+    <div class="hero__media" data-parallax="0.12"><img src="assets/fotos/hero-fade.jpg" alt="Cliente con fade y barba perfilada en Santos Barbería" fetchpriority="high"></div>
+    <div class="hero__year" data-parallax="-0.08" aria-hidden="true">1957</div>
+    <div class="hero__content wrap">
+      <p class="eyebrow fade-up" style="--d:500">Barbería 100% familiar · Guatemala</p>
+      <h1 class="display split" id="heroTitle" style="margin-top:22px">El arte de la barbería <span class="gold">desde 1957.</span></h1>
+      <p class="hero__sub fade-up" style="--d:1200">Tradición, precisión y estilo. <span class="serif">Una experiencia que trasciende generaciones.</span></p>
+      <div class="btn-row fade-up" style="--d:1400">
+        <a class="btn" href="#reservar">Reservar experiencia <span class="arr">→</span></a>
+        <a class="btn btn--ghost" href="#nosotros">Descubrir Santos</a>
+      </div>
+      <div class="hero__meta fade-up" style="--d:1600"><span>Quetzaltenango</span><span>Mazatenango</span><span>3 sucursales</span></div>
+    </div>
+    <div class="badge fade-up" style="--d:1800" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <defs><path id="circ" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
+        <g class="badge__ring"><text fill="#D8C3A5" style="font-family:Oswald,sans-serif;font-size:15px;letter-spacing:5px;text-transform:uppercase"><textPath href="#circ">Barbería 100% familiar · Desde 1957 · Santos ·</textPath></text></g>
+        <circle cx="100" cy="100" r="50" fill="#D8C3A5"/>
+        <svg x="72" y="68" width="56" height="64" style="color:#111;--hole:#D8C3A5"><use href="#face"/></svg>
+      </svg>
+    </div>
+    <a class="scroll-ind" href="#bienvenida" data-scroll-to="bienvenida"><i></i>Desliza</a>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Corte de cabello</span><span>Fade</span><span>Perfilado de barba</span><span>Mascarilla</span><span>Primer corte</span><span>Desde 1957</span>
+      <span>Corte de cabello</span><span>Fade</span><span>Perfilado de barba</span><span>Mascarilla</span><span>Primer corte</span><span>Desde 1957</span>
+    </div>
+  </div>
+
+  <div class="paper section" id="bienvenida">
+    <div class="wrap welcome">
+      <div class="welcome__text">
+        <p class="eyebrow" data-reveal>Bienvenido a Santos</p>
+        <h2 class="display split" data-reveal style="margin-block:20px 28px">Más que un corte, <span class="serif">un espacio familiar.</span></h2>
+        <p class="lead" data-reveal style="--d:150">Desde 1957, Santos es una barbería de familia. Aquí se cortan el pelo los abuelos, los papás y los niños, en el mismo sillón y con el mismo cuidado.</p>
+        <p data-reveal style="--d:250">Te esperamos en Xela y en Mazate para un corte limpio, una barba bien perfilada o simplemente un rato para relajarte.</p>
+        <div class="welcome__sign" data-reveal style="--d:350">
+          <svg class="welcome__stamp" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="none" stroke="#7a2a22" stroke-width="1.5" stroke-dasharray="3 4"/><circle cx="50" cy="50" r="38" fill="none" stroke="#7a2a22" stroke-width="1"/><text x="50" y="47" text-anchor="middle" fill="#7a2a22" style="font-family:'Bebas Neue',sans-serif;font-size:22px">1957</text><text x="50" y="62" text-anchor="middle" fill="#7a2a22" style="font-family:Oswald,sans-serif;font-size:7px;letter-spacing:2px">FAMILIA SANTOS</text></svg>
+          <span>Barbería Santos<br>Quetzaltenango · Mazatenango</span>
+        </div>
+      </div>
+      <nav class="welcome__links" aria-label="Explorar Santos">
+        <a href="#servicios" data-reveal style="--d:100">Servicios <small>Cortes, fades, barba</small><span class="arr">→</span></a>
+        <a href="#sucursales" data-reveal style="--d:180">Sucursales <small>Paulinos, Plaza Américas, Delco</small><span class="arr">→</span></a>
+        <a href="#galeria" data-reveal style="--d:260">Galería <small>Nuestro trabajo</small><span class="arr">→</span></a>
+        <a href="#reservar" data-reveal style="--d:340">Reservar <small>Por WhatsApp</small><span class="arr">→</span></a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="zoomband" id="zoomband">
+    <div class="zoomband__stick">
+      <div class="zoomband__hint" aria-hidden="true">Relájate</div>
+      <div class="zoomband__frame"><img src="assets/fotos/relajate.jpg" alt="Cliente disfrutando una bebida en Santos Barbería" loading="lazy"></div>
+      <div class="zoomband__txt">
+        <span class="serif">Tu momento en Santos.</span>
+        <p>Un corte, una bebida, una buena plática</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NOSOTROS ================= -->
+<section class="page" data-page="nosotros" aria-label="Nosotros" hidden>
+  <div class="page-head story-head">
+    <div class="big-year" data-parallax="0.15" aria-hidden="true">1957</div>
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Nuestra historia</p>
+      <h1 class="display split" data-reveal style="margin-top:22px;max-width:11em">Una historia que trasciende generaciones.</h1>
+    </div>
+  </div>
+  <div class="wrap" style="padding-bottom:clamp(70px,9vw,120px)">
+    <div class="story">
+      <figure style="margin:0">
+        <div class="story__photo" data-reveal="clip"><img src="assets/fotos/barberos.jpg" alt="Barberos de Santos atendiendo clientes en el salón" loading="lazy"></div>
+        <figcaption class="story__cap" data-reveal><span>El oficio, todos los días</span><span>Santos · Xela</span></figcaption>
+      </figure>
+      <div class="story__text">
+        <p class="drop" data-reveal>Santos nació en 1957 como una barbería de familia, y lo sigue siendo. El oficio pasó de mano en mano, y hoy el apellido sigue en la puerta de cada sucursal.</p>
+        <p data-reveal style="--d:120">Seguimos haciendo lo mismo de siempre: cortes bien hechos, barbas bien cuidadas y un trato cercano. Le sumamos técnicas actuales como el fade y el perfilado, y un lugar donde toda la familia se siente bien.</p>
+        <blockquote class="story__quote" data-reveal style="--d:220">"Barbería 100% familiar."</blockquote>
+      </div>
+    </div>
+
+    <div class="timeline" id="timeline">
+      <p class="eyebrow" data-reveal>Línea de tiempo</p>
+      <h2 class="display" data-reveal style="font-size:clamp(2.6rem,6vw,4.6rem);margin:16px 0 34px">Recorre nuestra historia</h2>
+      <div class="timeline__rail" aria-hidden="true"><b></b></div>
+      <ul class="timeline__list" role="list">
+        <li><button class="tl-item" data-tl="0" aria-pressed="true"><span class="yr">1957</span><span class="tt">Abre Santos</span></button></li>
+        <li><button class="tl-item pending" data-tl="1" aria-pressed="false"><span class="yr">Año</span><span class="tt">Hito por confirmar</span></button></li>
+        <li><button class="tl-item pending" data-tl="2" aria-pressed="false"><span class="yr">Año</span><span class="tt">Llegada a Mazatenango</span></button></li>
+        <li><button class="tl-item" data-tl="3" aria-pressed="false"><span class="yr">Hoy</span><span class="tt">3 sucursales</span></button></li>
+      </ul>
+      <div class="timeline__detail" id="tlDetail" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div class="paper section">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Lo que nos define</p>
+      <h2 class="display split" data-reveal style="font-size:clamp(3rem,7vw,6rem);margin:18px 0 44px">Tres cosas que no cambian.</h2>
+      <div class="values">
+        <div class="value" data-reveal><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#scissors"/></svg><h3>Tradición</h3><p>Más de seis décadas en el oficio. Hacemos los cortes clásicos como siempre se han hecho.</p></div>
+        <div class="value" data-reveal style="--d:120"><svg viewBox="0 0 64 74" aria-hidden="true" style="--hole:#D8C3A5"><use href="#face"/></svg><h3>Familia</h3><p>Una barbería familiar donde se atienden desde el primer corte hasta el abuelo de la casa.</p></div>
+        <div class="value" data-reveal style="--d:240"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.5" d="M3 21 21 3M14 3h7v7"/></svg><h3>Precisión</h3><p>Fades limpios, líneas definidas y barbas bien perfiladas. Te vas tal como lo pediste.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICIOS ================= -->
+<section class="page" data-page="servicios" aria-label="Servicios" hidden>
+  <div class="page-head">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Servicios</p>
+      <h1 class="display split" data-reveal style="margin-top:22px">El oficio, <span class="serif" style="text-transform:none;color:var(--sand)">en detalle.</span></h1>
+      <p class="lead" data-reveal style="--d:200">Elige tu servicio y resérvalo en un minuto. Los precios se confirman en tu sucursal.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding-bottom:clamp(70px,9vw,120px)">
+    <ul class="svc-list" id="svcList"></ul>
+  </div>
+  <div class="svc-float" id="svcFloat" aria-hidden="true"></div>
+
+  <div class="paper section">
+    <div class="wrap tips">
+      <div class="tips__img" data-reveal="clip"><img src="assets/fotos/barba-perfil.jpg" alt="Perfil de barba bien cuidada" loading="lazy"></div>
+      <div>
+        <p class="eyebrow" data-reveal>Consejos Santos</p>
+        <h2 class="display split" data-reveal style="margin:18px 0 10px">Cuida tu barba.</h2>
+        <p class="serif" data-reveal style="font-size:1.6rem;margin:0;color:var(--wine)">Una barba bien cuidada dice mucho de ti.</p>
+        <div class="tips__grid">
+          <div class="tip" data-reveal><span class="tip__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg></span><div><h3>Hidrata diario</h3><p>Usa aceite para barba y mantén el vello y la piel hidratados.</p></div></div>
+          <div class="tip" data-reveal style="--d:100"><span class="tip__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M3 8h18v4H3zM5 12v7M8 12v7M11 12v7M14 12v7M17 12v7M20 12v7"/></svg></span><div><h3>Peina y da forma</h3><p>Péinala todos los días para que se vea ordenada.</p></div></div>
+          <div class="tip" data-reveal style="--d:200"><span class="tip__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#scissors"/></svg></span><div><h3>Recorta seguido</h3><p>Mantén el largo que te queda y define los bordes con regularidad.</p></div></div>
+          <div class="tip" data-reveal style="--d:300"><span class="tip__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M4 13h16a8 8 0 0 1-16 0zM8 9a1.5 1.5 0 1 0 0-.1M13 7a2 2 0 1 0 0-.1M17 10a1.2 1.2 0 1 0 0-.1"/></svg></span><div><h3>Lávala bien</h3><p>Usa shampoo para barba 2 o 3 veces por semana.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SUCURSALES ================= -->
+<section class="page" data-page="sucursales" aria-label="Sucursales" hidden>
+  <div class="page-head">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Sucursales</p>
+      <h1 class="display split" data-reveal style="margin-top:22px">Encuentra tu Santos.</h1>
+      <p class="lead" data-reveal style="--d:200">Tres sucursales entre Quetzaltenango y Mazatenango. Elige una para ver cómo llegar y reservar ahí.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding-bottom:clamp(70px,9vw,120px)">
+    <div class="branches">
+      <div class="br-tabs" role="tablist" aria-label="Sucursales" id="brTabs" data-reveal></div>
+      <div class="br-panel" id="brPanel" role="tabpanel" data-reveal style="--d:150"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GALERÍA ================= -->
+<section class="page" data-page="galeria" aria-label="Galería" hidden>
+  <div class="page-head">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Galería</p>
+      <h1 class="display split" data-reveal style="margin-top:22px">The art of barbering.</h1>
+      <p class="lead" data-reveal style="--d:200">Cortes, barbas y momentos de nuestras sucursales. Toca una foto para verla en grande.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding-bottom:clamp(70px,9vw,120px)">
+    <div class="filters" role="group" aria-label="Filtrar galería" id="filters" data-reveal>
+      <button class="filter" data-f="all" aria-pressed="true">Todo</button>
+      <button class="filter" data-f="cortes" aria-pressed="false">Cortes</button>
+      <button class="filter" data-f="barba" aria-pressed="false">Barba</button>
+      <button class="filter" data-f="experiencia" aria-pressed="false">Experiencia</button>
+      <button class="filter" data-f="barberia" aria-pressed="false">Barbería</button>
+    </div>
+    <div class="gallery" id="gallery"></div>
+    <div style="margin-top:50px;display:flex;justify-content:center" data-reveal>
+      <a class="btn btn--ghost" href="https://www.instagram.com/barberiasantosgt/" target="_blank" rel="noopener"><svg width="18" height="18" aria-hidden="true"><use href="#ig"/></svg> Ver más en Instagram</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRODUCTOS ================= -->
+<section class="page" data-page="productos" aria-label="Productos" hidden>
+  <div class="page-head">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Productos</p>
+      <h1 class="display split" data-reveal style="margin-top:22px;max-width:12em">El estilo no termina en la barbería.</h1>
+    </div>
+  </div>
+  <div class="paper section">
+    <div class="wrap prod-hero">
+      <div class="prod-hero__img" data-reveal="clip"><img src="assets/fotos/reuzel.jpg" alt="Ceras Reuzel en distintas fijaciones" loading="lazy"></div>
+      <div>
+        <p class="eyebrow" data-reveal>Disponible en sucursales</p>
+        <h2 class="display" data-reveal style="margin-top:16px">Reuzel<small>Ceras de alto desempeño</small></h2>
+        <ul class="prod-feats">
+          <li data-reveal><b>Fijación fuerte</b><span>Tu estilo se mantiene todo el día.</span></li>
+          <li data-reveal style="--d:100"><b>Acabado natural</b><span>Buen brillo, sin dejar residuos.</span></li>
+          <li data-reveal style="--d:200"><b>Aroma único</b><span>Fragancias clásicas de barbería.</span></li>
+        </ul>
+        <div data-reveal style="--d:300"><a class="btn" data-wa-product="Ceras Reuzel" href="#">Consultar disponibilidad <span class="arr">→</span></a></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Elige tu favorita</p>
+      <h2 class="display" data-reveal style="font-size:clamp(2.6rem,6vw,4.6rem);margin:16px 0 50px">Una cera para cada estilo.</h2>
+      <div class="tins" id="tins"></div>
+      <p data-reveal style="margin-top:44px;color:var(--mute);font-size:.9rem">Precios y existencias por sucursal <span class="tag-pending">Por confirmar</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESERVAR ================= -->
+<section class="page" data-page="reservar" aria-label="Reservar cita" hidden>
+  <div class="page-head" style="padding-bottom:30px">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Reservar cita</p>
+      <h1 class="display split" data-reveal style="margin-top:22px">Tu silla te espera.</h1>
+      <p class="lead" data-reveal style="--d:200">Arma tu cita en cuatro pasos. La enviamos por WhatsApp a Santos y te confirman el horario.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding-bottom:clamp(70px,9vw,120px)">
+    <div class="booking">
+      <div>
+        <ol class="steps" id="stepsBar" aria-hidden="true"><li></li><li></li><li></li><li></li></ol>
+        <div id="stepHost" aria-live="polite"></div>
+      </div>
+      <aside class="paper summary" aria-label="Resumen de tu cita">
+        <h3>Tu cita</h3>
+        <dl id="summary"></dl>
+        <p class="note">La cita queda confirmada cuando Santos te responda por WhatsApp. Precio según servicio, se confirma en sucursal.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACTO ================= -->
+<section class="page" data-page="contacto" aria-label="Contacto" hidden>
+  <div class="page-head">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal>Contacto</p>
+      <h1 class="display contact-big split" data-reveal style="margin-top:18px">Hablemos.</h1>
+    </div>
+  </div>
+  <div class="wrap" style="padding-bottom:clamp(70px,9vw,120px)">
+    <div class="contact-grid">
+      <div class="c-cell" data-reveal>
+        <h3>WhatsApp</h3>
+        <span class="val" id="waNum">4107-0427</span>
+        <button class="copy" data-copy="+502 4107-0427">Copiar número</button>
+        <a class="btn btn--wa" style="justify-self:start;margin-top:8px" data-wa-text="Hola Santos, quiero hacer una consulta." href="#"><svg width="18" height="18" aria-hidden="true"><use href="#wa"/></svg> Escribir</a>
+      </div>
+      <div class="c-cell" data-reveal style="--d:120">
+        <h3>Horarios</h3>
+        <ul class="hours">
+          <li><span>Lunes a viernes</span><span class="tag-pending">Por confirmar</span></li>
+          <li><span>Sábado</span><span class="tag-pending">Por confirmar</span></li>
+          <li><span>Domingo</span><span class="tag-pending">Por confirmar</span></li>
+        </ul>
+        <p style="font-size:.88rem;color:var(--mute)">Pueden variar según la sucursal.</p>
+      </div>
+      <div class="c-cell" data-reveal style="--d:240">
+        <h3>Redes</h3>
+        <span class="val">@barberiasantosgt</span>
+        <p><a class="text" href="https://www.instagram.com/barberiasantosgt/" target="_blank" rel="noopener">Síguenos en Instagram</a></p>
+        <p style="color:var(--mute);font-size:.9rem">Promociones, nuevos cortes y vacantes.</p>
+      </div>
+    </div>
+    <div style="margin-top:60px" data-reveal>
+      <p class="eyebrow">Sucursales</p>
+      <div class="welcome__links" id="contactBranches" style="margin-top:20px;border-color:rgba(216,195,165,.18)"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="logo" href="#inicio" style="align-items:flex-start"><span class="logo__word">SANT<svg viewBox="0 0 64 74" aria-hidden="true"><use href="#face"/></svg>S</span><span class="logo__sub">Barbería · Desde 1957</span></a>
+        <p>Barbería 100% familiar. Tradición, precisión y estilo en Quetzaltenango y Mazatenango.</p>
+      </div>
+      <div><h4>Navegación</h4><ul><li><a href="#nosotros">Nosotros</a></li><li><a href="#servicios">Servicios</a></li><li><a href="#galeria">Galería</a></li><li><a href="#productos">Productos</a></li><li><a href="#reservar">Reservar</a></li></ul></div>
+      <div><h4>Sucursales</h4><ul><li><a href="#sucursales" data-branch-link="paulinos">Paulinos · Xela</a></li><li><a href="#sucursales" data-branch-link="americas">Plaza Américas · Mazate</a></li><li><a href="#sucursales" data-branch-link="delco">Delco · Xela</a></li></ul></div>
+      <div><h4>Contacto</h4><ul><li><a href="#contacto">WhatsApp 4107-0427</a></li><li><a href="https://www.instagram.com/barberiasantosgt/" target="_blank" rel="noopener">Instagram</a></li></ul></div>
+    </div>
+    <div class="footer__legacy">
+      <p class="footer__since" aria-label="Desde 1957">Since <span>1957</span></p>
+    </div>
+    <div class="footer__bottom">
+      <span>© <span id="yr">2026</span> Santos Barbería. Guatemala.</span>
+      <span>The art of barbering. Since 1957.</span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" data-wa-text="Hola Santos, quiero reservar una cita." href="#" aria-label="Escribir a Santos por WhatsApp"><svg aria-hidden="true"><use href="#wa"/></svg></a>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+  const WA = "50241070427";
+  const root = document.documentElement;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  root.classList.add("js");
+  root.classList.add(reduce ? "reduce" : "motion");
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const waLink = (text) => `https://wa.me/${WA}?text=${encodeURIComponent(text)}`;
+  $("#yr").textContent = new Date().getFullYear();
+
+  /* ---------- DATA (verificada en Instagram @barberiasantosgt) ---------- */
+  const BRANCHES = [
+    { id: "paulinos", name: "Paulinos", city: "Quetzaltenango", place: "Centro Comercial Paulinos", local: "Local L3, primer nivel",
+      maps: "Centro Comercial Paulinos Quetzaltenango", img: null },
+    { id: "americas", name: "Plaza Américas", city: "Mazatenango, Suchitepéquez", place: "CC Plaza Américas Milenium", local: "Local 211, segundo nivel",
+      maps: "Centro Comercial Plaza Americas Mazatenango", img: "assets/fotos/local-mazate.jpg" },
+    { id: "delco", name: "Delco", city: "Quetzaltenango", place: "Supercom Delco", local: "Local por confirmar",
+      maps: "Supercom Delco Quetzaltenango", img: null }
+  ];
+  const SERVICES = [
+    { id: "corte", name: "Corte de cabello", desc: "Corte clásico o moderno, a tu medida, con acabado a navaja.", img: "assets/fotos/corte-antes.jpg", time: "Duración por confirmar" },
+    { id: "fade", name: "Fade", desc: "Degradado limpio, del bajo al alto, con líneas bien marcadas.", img: "assets/fotos/hero-fade.jpg", time: "Duración por confirmar" },
+    { id: "barba", name: "Perfilado de barba", desc: "Definimos tu estilo y cuidamos cada detalle: contorno, largo y simetría.", img: "assets/fotos/barba-perfil.jpg", time: "Duración por confirmar" },
+    { id: "mascarilla", name: "Mascarilla negra", desc: "Limpieza facial con mascarilla para cerrar tu servicio fresco y renovado.", img: "assets/fotos/mascarilla-crop.jpg", time: "Duración por confirmar" },
+    { id: "ninos", name: "Primer corte", desc: "Un momento único que merece cuidado, paciencia y manos expertas. Con sillas de carrito para los más pequeños.", img: "assets/fotos/local-mazate.jpg", time: "Duración por confirmar" }
+  ];
+  const TIMELINE = [
+    { t: "1957 · Abre Santos", p: "Nace Barbería Santos, una barbería de familia en Guatemala.", src: "Fuente: perfil oficial, “Santos Barbería since 1957”" },
+    { t: "Hito por confirmar", p: "Aquí va un momento importante de la familia Santos (nueva generación, cambio de local, aniversario). Se completa con datos de la familia.", src: "Dato pendiente" },
+    { t: "Llegada a Mazatenango", p: "Santos abre en el CC Plaza Américas Milenium, Local 211. El año de apertura está por confirmar.", src: "Dato pendiente: año" },
+    { t: "Hoy · 3 sucursales", p: "Paulinos y Delco en Quetzaltenango, y Plaza Américas en Mazatenango. Sigue siendo una barbería 100% familiar.", src: "Fuente: publicación “Nuestras sucursales”, julio 2026" }
+  ];
+  const GALLERY = [
+    { src: "assets/fotos/antes-despues.jpg", cat: "cortes", cap: "Antes y después: el cambio habla por sí solo", cls: "g-a" },
+    { src: "assets/fotos/barba-perfil.jpg", cat: "barba", cap: "Barba perfilada", cls: "g-b" },
+    { src: "assets/fotos/mascarilla-crop.jpg", cat: "experiencia", cap: "Mascarilla negra", cls: "g-c" },
+    { src: "assets/fotos/barberos.jpg", cat: "barberia", cap: "Nuestros barberos en acción", cls: "g-d wide" },
+    { src: "assets/fotos/hero-fade.jpg", cat: "cortes", cap: "Fade con barba", cls: "g-e" },
+    { src: "assets/fotos/local-mazate.jpg", cat: "barberia", cap: "Sucursal Plaza Américas, Mazate", cls: "g-f wide" },
+    { src: "assets/fotos/consejos-barba.jpg", cat: "barba", cap: "Consejos para cuidar tu barba", cls: "g-g" },
+    { src: "assets/fotos/relajate.jpg", cat: "experiencia", cap: "Relájate y disfruta", cls: "g-h wide" }
+  ];
+  const TINS = [
+    { name: "Reuzel Pink", desc: "Pomada de fijación fuerte (heavy hold), base de grasa.", c: "#d76f8e" },
+    { name: "Reuzel Green", desc: "Pomada de fijación media (medium hold), base de grasa.", c: "#3f8f5a" },
+    { name: "Reuzel Blue", desc: "Pomada de fijación fuerte, base de agua. Se lava fácil.", c: "#2f7fc0" },
+    { name: "Reuzel Fiber", desc: "Pomada de fibra, para textura y acabado natural.", c: "#21386b" }
+  ];
+
+  /* ---------- toast + whatsapp links ---------- */
+  const toast = (msg) => { const t = $("#toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("on"), 2200); };
+  const bindWa = (scope = document) => {
+    $$("[data-wa-text]", scope).forEach(a => { a.href = waLink(a.dataset.waText); a.target = "_blank"; a.rel = "noopener"; });
+    $$("[data-wa-product]", scope).forEach(a => { a.href = waLink(`Hola Santos, quiero consultar precio y disponibilidad de: ${a.dataset.waProduct}.`); a.target = "_blank"; a.rel = "noopener"; });
+  };
+  document.addEventListener("click", (e) => {
+    const c = e.target.closest("[data-copy]"); if (!c) return;
+    const txt = c.dataset.copy;
+    const done = () => toast("Número copiado");
+    try { navigator.clipboard.writeText(txt).then(done, () => { selectText($("#waNum")); toast("Selecciona y copia el número"); }); }
+    catch { selectText($("#waNum")); toast("Selecciona y copia el número"); }
+  });
+  const selectText = (el) => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+
+  /* ---------- split text ---------- */
+  $$(".split").forEach(el => {
+    const walk = (node) => {
+      [...node.childNodes].forEach(n => {
+        if (n.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(part => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(" ")); return; }
+            const w = document.createElement("span"); w.className = "w";
+            const i = document.createElement("span"); i.textContent = part; w.appendChild(i); frag.appendChild(w);
+          });
+          n.replaceWith(frag);
+        } else if (n.nodeType === 1) walk(n);
+      });
+    };
+    walk(el);
+    $$(".w > span", el).forEach((s, i) => s.style.setProperty("--i", i));
+  });
+
+  /* ---------- reveal observer ---------- */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+  }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+  const armReveals = (page) => {
+    $$("[data-reveal]", page).forEach(el => {
+      if (reduce) { el.classList.add("in"); return; }
+      el.classList.remove("in"); io.observe(el);
+    });
+  };
+
+  /* ---------- ROUTER with curtain ---------- */
+  const PAGES = ["inicio","nosotros","servicios","sucursales","galeria","productos","reservar","contacto"];
+  const LABELS = { inicio:"Inicio", nosotros:"Nosotros", servicios:"Servicios", sucursales:"Sucursales", galeria:"Galería", productos:"Productos", reservar:"Reservar", contacto:"Contacto" };
+  let current = null, busy = false;
+  const curtain = $("#curtain");
+  const showPage = (id) => {
+    $$(".page").forEach(p => p.hidden = p.dataset.page !== id);
+    $$('.nav__links a, .mmenu a').forEach(a => a.getAttribute("href") === "#" + id ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
+    window.scrollTo(0, 0);
+    const page = $(`.page[data-page="${id}"]`);
+    armReveals(page);
+    document.title = id === "inicio" ? "Santos Barbería" : `${LABELS[id]} · Santos Barbería`;
+    if (id === "inicio") heroIntro(); else root.classList.add("nav-in");
+    if (id === "reservar") renderStep(0);
+    current = id;
+    onScroll();
+  };
+  const route = () => {
+    let id = location.hash.replace("#", "");
+    if (id === "bienvenida") { id = "inicio"; }
+    if (!PAGES.includes(id)) id = "inicio";
+    closeMenu();
+    if (id === current) return;
+    if (current === null || reduce) { showPage(id); return; }
+    if (busy) { showPage(id); return; }
+    busy = true;
+    $("#curtainLabel").textContent = LABELS[id];
+    curtain.classList.remove("is-leave"); void curtain.offsetWidth;
+    curtain.classList.add("is-cover");
+    setTimeout(() => {
+      showPage(id);
+      curtain.classList.add("is-leave");
+      setTimeout(() => { curtain.style.transition = "none"; curtain.classList.remove("is-cover","is-leave"); void curtain.offsetWidth; curtain.style.transition = ""; busy = false; }, 760);
+    }, 680);
+  };
+  window.addEventListener("hashchange", route);
+
+  /* hero intro */
+  let heroPlayed = false;
+  function heroIntro() {
+    const hero = $("#hero"), title = $("#heroTitle");
+    if (reduce) { hero.classList.add("is-in"); title.classList.add("in"); root.classList.add("nav-in"); return; }
+    hero.classList.remove("is-in"); title.classList.remove("in");
+    title.style.setProperty("--d", heroPlayed ? 150 : 650);
+    requestAnimationFrame(() => requestAnimationFrame(() => { hero.classList.add("is-in"); title.classList.add("in"); }));
+    setTimeout(() => root.classList.add("nav-in"), heroPlayed ? 0 : 250);
+    heroPlayed = true;
+  }
+  $$("[data-scroll-to]").forEach(a => a.addEventListener("click", (e) => { e.preventDefault(); const t = document.getElementById(a.dataset.scrollTo); t && t.scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); }));
+
+  /* ---------- menu ---------- */
+  const burger = $("#burger");
+  const closeMenu = () => { root.classList.remove("menu-open"); burger.setAttribute("aria-expanded","false"); document.body.style.overflow = ""; };
+  burger.addEventListener("click", () => { const open = !root.classList.contains("menu-open"); root.classList.toggle("menu-open", open); burger.setAttribute("aria-expanded", String(open)); document.body.style.overflow = open ? "hidden" : ""; });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") { closeMenu(); closeLb(); } });
+
+  /* ---------- scroll: progress, nav, parallax, zoomband, timeline ---------- */
+  const nav = $("#nav"), prog = $(".progress"), zb = $("#zoomband");
+  let ticking = false;
+  function onScroll() {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(() => {
+      ticking = false;
+      const y = scrollY, h = document.documentElement.scrollHeight - innerHeight;
+      prog.style.transform = `scaleX(${h > 0 ? y / h : 0})`;
+      nav.classList.toggle("is-solid", y > 40 || current !== "inicio");
+      if (!reduce) {
+        $$(".page:not([hidden]) [data-parallax]").forEach(el => {
+          const r = el.getBoundingClientRect(); const s = parseFloat(el.dataset.parallax);
+          el.style.translate = `0 ${(r.top + r.height / 2 - innerHeight / 2) * -s}px`;
+        });
+        if (current === "inicio" && zb) {
+          const r = zb.getBoundingClientRect(); const p = Math.min(1, Math.max(0, -r.top / (r.height - innerHeight)));
+          zb.style.setProperty("--p", p.toFixed(3));
+        }
+      }
+      if (current === "nosotros") {
+        const tl = $("#timeline"); const r = tl.getBoundingClientRect();
+        const p = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight * .9)));
+        tl.style.setProperty("--tl", p.toFixed(3));
+      }
+    });
+  }
+  addEventListener("scroll", onScroll, { passive: true });
+  addEventListener("resize", onScroll);
+
+  /* ---------- custom cursor ---------- */
+  if (matchMedia("(pointer:fine)").matches && !reduce) {
+    root.classList.add("has-cursor");
+    const ring = $(".cursor"), dot = $(".cursor-dot");
+    let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
+    addEventListener("mousemove", (e) => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx}px,${my}px)`; });
+    (function loop() { rx += (mx - rx) * .18; ry += (my - ry) * .18; ring.style.transform = `translate(${rx}px,${ry}px)`; requestAnimationFrame(loop); })();
+    document.addEventListener("mouseover", (e) => ring.classList.toggle("is-hover", !!e.target.closest("a,button,.g-item")));
+  }
+
+  /* ---------- NOSOTROS timeline ---------- */
+  const tlDetail = $("#tlDetail");
+  const setTl = (i) => {
+    $$(".tl-item").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.tl === i)));
+    const d = TIMELINE[i];
+    tlDetail.innerHTML = `<div class="tl-swap"><h3 class="display" style="font-size:clamp(2rem,4vw,3rem)">${d.t}</h3><p style="margin-top:10px">${d.p}</p><p class="src" style="margin-top:10px">${d.src}</p></div>`;
+  };
+  $$(".tl-item").forEach(b => b.addEventListener("click", () => setTl(+b.dataset.tl)));
+  setTl(0);
+
+  /* ---------- SERVICIOS ---------- */
+  const svcList = $("#svcList"), svcFloat = $("#svcFloat");
+  SERVICES.forEach((s, i) => {
+    const li = document.createElement("li"); li.className = "svc"; li.dataset.reveal = ""; li.style.setProperty("--d", i * 80);
+    li.innerHTML = `<div class="svc__row">
+      <span class="svc__ix">${String(i + 1).padStart(2, "0")}</span>
+      <h2 class="svc__name">${s.name}</h2>
+      <p class="svc__desc">${s.desc}</p>
+      <div class="svc__meta"><span>Precio en sucursal</span><span>${s.time}</span><span>Las 3 sucursales <span class="tag-pending">Por confirmar</span></span></div>
+      <a class="btn svc__book" href="#reservar" data-book-service="${s.id}">Reservar <span class="arr">→</span></a>
+      <div class="svc__thumb"><img src="${s.img}" alt="${s.name}" loading="lazy"></div>
+    </div>`;
+    svcList.appendChild(li);
+    const im = document.createElement("img"); im.src = s.img; im.alt = ""; im.dataset.s = s.id; svcFloat.appendChild(im);
+    li.addEventListener("mouseenter", () => { svcFloat.classList.add("on"); $$("img", svcFloat).forEach(x => x.classList.toggle("on", x.dataset.s === s.id)); });
+    li.addEventListener("mouseleave", () => svcFloat.classList.remove("on"));
+  });
+  let fx = 0, fy = 0, tx = 0, ty = 0;
+  addEventListener("mousemove", (e) => { tx = e.clientX + 170; ty = e.clientY; });
+  (function floatLoop() { fx += (tx - fx) * .12; fy += (ty - fy) * .12; svcFloat.style.left = fx + "px"; svcFloat.style.top = fy + "px"; requestAnimationFrame(floatLoop); })();
+
+  /* ---------- SUCURSALES ---------- */
+  const brTabs = $("#brTabs"), brPanel = $("#brPanel");
+  const mapsUrl = (q) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+  BRANCHES.forEach((b, i) => {
+    const t = document.createElement("button"); t.className = "br-tab"; t.setAttribute("role", "tab"); t.id = "tab-" + b.id; t.setAttribute("aria-selected", "false"); t.setAttribute("aria-controls", "brPanel"); t.dataset.br = b.id;
+    t.innerHTML = `<span class="n">${b.name}</span><span class="c">${b.city}</span><span class="dot"></span>`;
+    t.addEventListener("click", () => setBranch(b.id));
+    brTabs.appendChild(t);
+  });
+  brTabs.addEventListener("keydown", (e) => {
+    if (!["ArrowDown","ArrowUp","ArrowLeft","ArrowRight"].includes(e.key)) return;
+    e.preventDefault(); const tabs = $$(".br-tab"); const i = tabs.indexOf(document.activeElement);
+    const n = tabs[(i + (e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length]; n.focus(); setBranch(n.dataset.br);
+  });
+  function setBranch(id) {
+    const b = BRANCHES.find(x => x.id === id);
+    $$(".br-tab").forEach(t => { const on = t.dataset.br === id; t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1; });
+    brPanel.setAttribute("aria-labelledby", "tab-" + id);
+    const media = b.img
+      ? `<img src="${b.img}" alt="Interior de la sucursal ${b.name}">`
+      : `<div class="paper br-ph"><div><div class="display">${b.name}</div><small class="tag-pending">Foto de la sucursal por agregar</small></div></div>`;
+    brPanel.innerHTML = `<div class="br-swap">
+      <div class="br-panel__media">${media}</div>
+      <div class="br-panel__body">
+        <div><p class="eyebrow">Sucursal</p><h3 style="margin-top:10px">${b.name}</h3></div>
+        <dl class="br-facts">
+          <div><dt>Dirección</dt><dd>${b.place}<br>${b.local}<br>${b.city}</dd></div>
+          <div><dt>Horario</dt><dd><span class="tag-pending">Por confirmar</span></dd></div>
+          <div><dt>WhatsApp</dt><dd>4107-0427</dd></div>
+          <div><dt>Servicios</dt><dd>Corte, fade, barba, mascarilla, primer corte</dd></div>
+        </dl>
+        <div class="btn-row">
+          <a class="btn" href="#reservar" data-book-branch="${b.id}">Reservar aquí <span class="arr">→</span></a>
+          <a class="btn btn--ghost" href="${mapsUrl(b.maps)}" target="_blank" rel="noopener">Cómo llegar</a>
+        </div>
+      </div></div>`;
+  }
+  setBranch("paulinos");
+  document.addEventListener("click", (e) => { const a = e.target.closest("[data-branch-link]"); if (a) setBranch(a.dataset.branchLink); });
+
+  /* contact branch list */
+  $("#contactBranches").innerHTML = BRANCHES.map(b => `<a href="#sucursales" data-branch-link="${b.id}" style="border-color:rgba(216,195,165,.18)">${b.name} <small style="color:var(--mute)">${b.place} · ${b.local} · ${b.city}</small><span class="arr">→</span></a>`).join("");
+
+  /* ---------- GALERÍA ---------- */
+  const gal = $("#gallery");
+  GALLERY.forEach((g, i) => {
+    const f = document.createElement("figure"); f.style.margin = "0"; f.className = "g-item " + g.cls; f.tabIndex = 0; f.setAttribute("role", "button"); f.setAttribute("aria-label", "Ver foto: " + g.cap);
+    f.dataset.cat = g.cat; f.dataset.i = i; f.dataset.reveal = "clip"; f.style.setProperty("--d", (i % 3) * 120);
+    f.innerHTML = `<img src="${g.src}" alt="${g.cap}" loading="lazy"><figcaption>${g.cap}</figcaption>`;
+    gal.appendChild(f);
+  });
+  $$(".filter").forEach(b => b.addEventListener("click", () => {
+    const f = b.dataset.f;
+    $$(".filter").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    gal.classList.toggle("filtered", f !== "all");
+    $$(".g-item", gal).forEach(it => {
+      const show = f === "all" || it.dataset.cat === f;
+      it.classList.toggle("is-hidden", !show);
+      if (show && !reduce) it.animate([{ opacity: 0, transform: "translateY(20px)" }, { opacity: 1, transform: "none" }], { duration: 600, easing: "cubic-bezier(.16,1,.3,1)" });
+    });
+  }));
+  /* lightbox */
+  const lb = document.createElement("div"); lb.className = "lightbox"; lb.setAttribute("role", "dialog"); lb.setAttribute("aria-modal", "true"); lb.setAttribute("aria-label", "Galería ampliada");
+  lb.innerHTML = `<div class="lb-top"><span id="lbCount"></span><button class="lb-btn" id="lbClose" aria-label="Cerrar">✕</button></div>
+    <div class="lb-stage"><img id="lbImg" alt=""></div>
+    <div class="lb-bottom"><button class="lb-btn" id="lbPrev" aria-label="Foto anterior">←</button><span class="lb-cap" id="lbCap"></span><button class="lb-btn" id="lbNext" aria-label="Foto siguiente">→</button></div>`;
+  document.body.appendChild(lb);
+  let lbList = [], lbIx = 0, lastFocus = null;
+  const lbShow = (i) => {
+    lbIx = (i + lbList.length) % lbList.length; const g = GALLERY[lbList[lbIx]]; const img = $("#lbImg");
+    img.classList.add("swap");
+    setTimeout(() => { img.src = g.src; img.alt = g.cap; $("#lbCap").textContent = g.cap; $("#lbCount").textContent = `${lbIx + 1} / ${lbList.length}`; img.classList.remove("swap"); }, reduce ? 0 : 180);
+  };
+  const openLb = (i) => { lastFocus = document.activeElement; lbList = $$(".g-item:not(.is-hidden)", gal).map(x => +x.dataset.i); lbShow(lbList.indexOf(i)); lb.classList.add("open"); document.body.style.overflow = "hidden"; $("#lbClose").focus(); };
+  function closeLb() { if (!lb.classList.contains("open")) return; lb.classList.remove("open"); document.body.style.overflow = ""; lastFocus && lastFocus.focus(); }
+  gal.addEventListener("click", (e) => { const it = e.target.closest(".g-item"); if (it) openLb(+it.dataset.i); });
+  gal.addEventListener("keydown", (e) => { const it = e.target.closest(".g-item"); if (it && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openLb(+it.dataset.i); } });
+  $("#lbClose").onclick = closeLb; $("#lbPrev").onclick = () => lbShow(lbIx - 1); $("#lbNext").onclick = () => lbShow(lbIx + 1);
+  lb.addEventListener("click", (e) => { if (e.target === lb || e.target.classList.contains("lb-stage")) closeLb(); });
+  document.addEventListener("keydown", (e) => { if (!lb.classList.contains("open")) return; if (e.key === "ArrowRight") lbShow(lbIx + 1); if (e.key === "ArrowLeft") lbShow(lbIx - 1); });
+  let sx = null; lb.addEventListener("touchstart", (e) => sx = e.touches[0].clientX, { passive: true });
+  lb.addEventListener("touchend", (e) => { if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) lbShow(lbIx + (dx < 0 ? 1 : -1)); sx = null; });
+
+  /* ---------- PRODUCTOS ---------- */
+  $("#tins").innerHTML = TINS.map((t, i) => `<div class="tin" data-reveal style="--d:${i * 100};--c:${t.c}">
+    <div class="tin__disc"><span>REUZEL</span></div>
+    <h3>${t.name}</h3><p>${t.desc}</p><span class="meta">Precio en sucursal</span>
+    <a data-wa-product="${t.name}" href="#">Consultar →</a></div>`).join("");
+
+  /* ---------- RESERVAR wizard ---------- */
+  const booking = { branch: null, service: null, date: "", time: "", name: "", phone: "" };
+  const TIMES = ["9:00","10:00","11:00","12:00","14:00","15:00","16:00","17:00"];
+  let step = 0, lastStep = 0;
+  const fmtDate = (v) => { if (!v) return ""; const [y, m, d] = v.split("-").map(Number); return new Date(y, m - 1, d).toLocaleDateString("es-GT", { weekday: "long", day: "numeric", month: "long" }); };
+  const todayISO = () => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); };
+  function renderSummary() {
+    const b = BRANCHES.find(x => x.id === booking.branch), s = SERVICES.find(x => x.id === booking.service);
+    const row = (k, v) => `<div><dt>${k}</dt><dd>${v || "—"}</dd></div>`;
+    $("#summary").innerHTML = row("Sucursal", b && `${b.name}, ${b.city.split(",")[0]}`) + row("Servicio", s && s.name) + row("Fecha", fmtDate(booking.date)) + row("Hora", booking.time) + row("Nombre", booking.name) + row("Teléfono", booking.phone) + row("Precio", s ? "Se confirma en sucursal" : "");
+  }
+  function renderStep(n) {
+    const dir = n < lastStep ? "back" : ""; lastStep = n; step = n;
+    $$("#stepsBar li").forEach((li, i) => li.classList.toggle("done", i <= n));
+    const host = $("#stepHost"); let html = "";
+    if (n === 0) {
+      html = `<p class="step-label">Paso 1 de 4</p><h2>¿En qué sucursal?</h2><div class="opts">${BRANCHES.map(b => `<button class="opt" data-pick="branch" data-v="${b.id}" aria-pressed="${booking.branch === b.id}"><span><strong>${b.name}</strong><small>${b.place} · ${b.city}</small></span><span aria-hidden="true">→</span></button>`).join("")}</div>`;
+    } else if (n === 1) {
+      html = `<p class="step-label">Paso 2 de 4</p><h2>¿Qué servicio?</h2><div class="opts two">${SERVICES.map(s => `<button class="opt" data-pick="service" data-v="${s.id}" aria-pressed="${booking.service === s.id}"><span><strong>${s.name}</strong><small>Precio en sucursal</small></span></button>`).join("")}</div>`;
+    } else if (n === 2) {
+      html = `<p class="step-label">Paso 3 de 4</p><h2>¿Cuándo te esperamos?</h2>
+        <div class="field"><label for="bkDate">Fecha</label><input type="date" id="bkDate" min="${todayISO()}" value="${booking.date}"></div>
+        <div class="field"><label id="slotLbl">Hora preferida</label><div class="slots" role="group" aria-labelledby="slotLbl">${TIMES.map(t => `<button class="opt" data-pick="time" data-v="${t}" aria-pressed="${booking.time === t}">${t}</button>`).join("")}</div></div>
+        <p style="color:var(--mute);font-size:.88rem;margin:0">Santos te confirma si el horario está libre.</p>`;
+    } else {
+      html = `<p class="step-label">Paso 4 de 4</p><h2>Tus datos</h2>
+        <form id="bkForm" novalidate>
+          <div class="field"><label for="bkName">Nombre completo</label><input id="bkName" autocomplete="name" value="${booking.name}" required><span class="err" id="errName"></span></div>
+          <div class="field"><label for="bkPhone">Teléfono</label><input id="bkPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="0000-0000" value="${booking.phone}" required><span class="err" id="errPhone"></span></div>
+          <button class="btn" type="submit" style="margin-top:10px"><svg width="18" height="18" aria-hidden="true"><use href="#wa"/></svg> Enviar reserva por WhatsApp</button>
+        </form>`;
+    }
+    const canNext = (n === 0 && booking.branch) || (n === 1 && booking.service) || (n === 2 && booking.date && booking.time);
+    if (n < 3) html += `<div class="step-nav">${n > 0 ? `<button class="linkbtn" data-nav="-1">← Atrás</button>` : "<span></span>"}<button class="btn" data-nav="1" ${canNext ? "" : "disabled"}>Continuar <span class="arr">→</span></button></div>`;
+    else html += `<div class="step-nav"><button class="linkbtn" data-nav="-1">← Atrás</button></div>`;
+    host.innerHTML = `<div class="step ${reduce ? "" : dir}">${html}</div>`;
+    renderSummary();
+    const d = $("#bkDate"); if (d) d.addEventListener("input", () => { booking.date = d.value; renderSummary(); $('[data-nav="1"]').disabled = !(booking.date && booking.time); });
+    const form = $("#bkForm");
+    if (form) {
+      ["bkName","bkPhone"].forEach(id => $("#" + id).addEventListener("input", (e) => { booking[id === "bkName" ? "name" : "phone"] = e.target.value.trim(); renderSummary(); }));
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const nameOk = booking.name.length >= 3, digits = booking.phone.replace(/\D/g, ""), phoneOk = digits.length >= 8;
+        $("#errName").textContent = nameOk ? "" : "Escribe tu nombre completo.";
+        $("#errPhone").textContent = phoneOk ? "" : "Escribe un teléfono de 8 dígitos.";
+        if (!nameOk || !phoneOk) return;
+        const b = BRANCHES.find(x => x.id === booking.branch), s = SERVICES.find(x => x.id === booking.service);
+        const msg = `Hola Santos, quiero reservar una cita:\n• Sucursal: ${b.name} (${b.place}, ${b.city})\n• Servicio: ${s.name}\n• Fecha: ${fmtDate(booking.date)}\n• Hora preferida: ${booking.time}\n• Nombre: ${booking.name}\n• Teléfono: ${booking.phone}`;
+        const a = document.createElement("a"); a.href = waLink(msg); a.target = "_blank"; a.rel = "noopener"; document.body.appendChild(a); a.click(); a.remove();
+        $("#stepHost").innerHTML = `<div class="step"><p class="step-label">Listo</p><h2>Se abrió WhatsApp con tu reserva.</h2><p style="color:#d6ccbe;max-width:52ch">Envía el mensaje en WhatsApp. Tu cita queda confirmada cuando Santos te responda. Si WhatsApp no se abrió, escríbenos al <strong>4107-0427</strong>.</p><div class="btn-row" style="margin-top:24px"><a class="btn" href="${waLink(msg)}" target="_blank" rel="noopener">Abrir WhatsApp de nuevo</a><button class="linkbtn" id="bkAgain">Hacer otra reserva</button></div></div>`;
+        $("#bkAgain").onclick = () => { Object.assign(booking, { branch: null, service: null, date: "", time: "", name: "", phone: "" }); renderStep(0); };
+      });
+    }
+  }
+  $("#stepHost").addEventListener("click", (e) => {
+    const p = e.target.closest("[data-pick]");
+    if (p) {
+      booking[p.dataset.pick] = p.dataset.v;
+      if (p.dataset.pick === "time") { $$('[data-pick="time"]').forEach(x => x.setAttribute("aria-pressed", String(x === p))); $('[data-nav="1"]').disabled = !(booking.date && booking.time); renderSummary(); return; }
+      renderSummary(); setTimeout(() => renderStep(step + 1), reduce ? 0 : 220);
+      $$(`[data-pick="${p.dataset.pick}"]`).forEach(x => x.setAttribute("aria-pressed", String(x === p)));
+      return;
+    }
+    const nv = e.target.closest("[data-nav]"); if (nv) renderStep(Math.max(0, Math.min(3, step + +nv.dataset.nav)));
+  });
+  /* preselect from other pages */
+  document.addEventListener("click", (e) => {
+    const s = e.target.closest("[data-book-service]"), b = e.target.closest("[data-book-branch]");
+    if (s) { booking.service = s.dataset.bookService; pendingStep = booking.branch ? 2 : 0; }
+    if (b) { booking.branch = b.dataset.bookBranch; pendingStep = booking.service ? 2 : 1; }
+  });
+  let pendingStep = null;
+  const _render = renderStep;
+  renderStep = function (n) { if (pendingStep !== null && n === 0) { const ps = pendingStep; pendingStep = null; return _render(ps); } pendingStep = null; return _render(n); };
+
+  bindWa();
+  bindWa($("#tins"));
+  route();
+})();
+</script>
